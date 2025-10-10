@@ -20,6 +20,7 @@ const initialState:formState = {
 }
   const [state, formAction] = useActionState(createJob, initialState)
   const [formData, setFormData] = useState({ company: "", title: "", location: "", jobType: "", status: "", appliedDate: "", link: "", notes: "",});
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const{id, value} = e.target
@@ -46,7 +47,7 @@ const initialState:formState = {
       }
     });
   }
-    }, [state.success]);
+    }, [state]);
 
     const SubmitButton = React.memo(() => {
       const { pending } = useFormStatus();
@@ -55,6 +56,9 @@ const initialState:formState = {
           type="submit"
           className="bg-[#181818] text-white rounded-[5px] p-2 cursor-pointer"
           disabled={pending}
+          onClick={(e) => {
+           if(pending) e.preventDefault()
+          }}
         >
           {pending ? <ClipLoader size={18} color={"#ffffff"} /> : "create job"}
         </button>
