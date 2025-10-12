@@ -35,76 +35,89 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-r
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  totalJobs: number;
+  setJobs?: React.Dispatch<React.SetStateAction<TData[]>>;
 }
+function DataTablePagination<TData>({ table, totalJobs}: { table: TableType<TData>, totalJobs:number}) {
+  const pageIndex = table.getState().pagination.pageIndex;
+  const pageSize = table.getState().pagination.pageSize;
+  // const totalFiltered = table.getFilteredRowModel().rows.length ;
+  const currentPageRowCount = table.getRowModel().rows.length;
+  const startRow = pageIndex * pageSize + 1;
+  const endRow = Math.min(startRow + currentPageRowCount - 1, totalJobs);
 
-function DataTablePagination<TData>({ table }: { table: TableType<TData> }) {
   return (
     <div className="flex items-center justify-between px-2 py-4">
-      <div className="flex items-center space-x-6 lg:space-x-8">
+      <div className="flex items-center justify-between space-x-6 lg:space-x-8 w-full">
         <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
-          <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
-            }}
-          >
-            <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="top">
-              {[10, 20, 25, 30, 40, 50].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <p className="text-sm font-medium flex gap-x-1">
+            <span className="text-[#71717a]">
+              Showing 
+            </span>
+            {totalJobs === 0 ? (
+              <>0 entries</>
+            ): (
+              <>
+              {startRow}-{endRow}
+              <span className="text-[#71717a]">
+                of
+              </span> 
+              {totalJobs}
+              {/* {totalJobs}  */}
+              <span className="text-[#71717a]">
+                entries
+              </span>
+              </>
+            )}
+          </p>
         </div>
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="hidden size-8 lg:flex"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to first page</span>
-            <ChevronsLeft />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="size-8"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to previous page</span>
-            <ChevronLeft />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="size-8"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to next page</span>
-            <ChevronRight />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="hidden size-8 lg:flex"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to last page</span>
-            <ChevronsRight />
-          </Button>
+        <div className="flex items-center">
+          <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+            Page {pageIndex + 1} of {table.getPageCount()}
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              size="icon"
+              className="hidden size-8 lg:flex"
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">Go to first page</span>
+              <ChevronsLeft />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="size-8"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">Go to previous page</span>
+              <ChevronLeft />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="size-8"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">Go to next page</span>
+              <ChevronRight />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="hidden size-8 lg:flex"
+              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">Go to last page</span>
+              <ChevronsRight />
+            </Button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -114,12 +127,16 @@ function DataTablePagination<TData>({ table }: { table: TableType<TData> }) {
 export function DataTable<TData, TValue>({
   columns,
   data,
+  totalJobs,
+  setJobs
+
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [jobTypeFilter, setJobTypeFilter] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [globalFilter, setGlobalFilter] = useState<string>("");
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
 
   const table = useReactTable({
     data,
@@ -132,11 +149,16 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: "includesString",
+    // pageCount: Math.ceil((totalJobs || 0)/10),
     state: {
       sorting,
       columnFilters,
       globalFilter,
+      pagination,
+      // pagination:{pageIndex:0, pageSize:10}
     },
+    onPaginationChange: setPagination, 
+    autoResetPageIndex:false,
     debugTable: true,
   });
 
@@ -147,9 +169,9 @@ export function DataTable<TData, TValue>({
   }, [jobTypeFilter, statusFilter, table]);
 
   return (
-    <div className="overflow-hidden rounded-md border border-green-900 h-[300px]">
+    <div className="overflow-hidden rounded-md flex flex-col flex-1">
       {/* Filters */}
-      <div className="flex gap-4 p-4 bg-gray-50">
+      <div className="flex  flex-wrap gap-4 p-4 bg-gray-50 ">
         <Input
           placeholder="Search by title or company..."
           value={globalFilter}
@@ -184,8 +206,8 @@ export function DataTable<TData, TValue>({
         </Select>
       </div>
       {/* Table with Scroll */}
-      <div className="overflow-x-auto border border-blue-700 ">
-        <div className="h-[200px] overflow-y-auto border-2 border-red-900">
+      <div className="overflow-auto flex-1  ">
+        <div className="h-full md:h-[230px] overflow-y-auto">
           <Table>
             <TableHeader className="sticky top-0 bg-white z-10">
               {table.getHeaderGroups().map((headerGroup) => (
@@ -229,7 +251,7 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
       {/* Pagination */}
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table} totalJobs={totalJobs}/>
     </div>
   );
 }

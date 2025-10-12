@@ -7,7 +7,7 @@ export default function dashboard({
 }) {
   return (
     <div className="rounded-[20px] m-5 min-h-screen bg-[#f3f3f3] flex flex-col">
-      <div className="rounded-[20px] flex my-7 mx-2 h-[500px] ">
+      <div className="rounded-[20px] flex my-7 mx-2 h-[500px]">
 
         {/* Left Sidebar */}
         <div className="w-[25%] shadow px-7 pt-3  rounded-tl-[20px] rounded-bl-[20px] bg-[#07090b] space-y-3">
@@ -20,7 +20,7 @@ export default function dashboard({
         </div>
 
         {/* Right Content */}
-        <div className="w-[75%] shadow  rounded-tr-[20px] rounded-br-[20px] h-full flex flex-col">
+        <div className="w-[75%] shadow  rounded-tr-[20px] rounded-br-[20px] flex flex-col flex-1">
           {children}
         </div>
       </div>

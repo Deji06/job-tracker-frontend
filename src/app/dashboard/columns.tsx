@@ -2,6 +2,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Pencil, Trash, ArrowUpDown,  ChevronsUpDown} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "react-hot-toast";
+import { deleteJob } from "../dashboardAction";
 
 export interface Job {
   id: number;
@@ -18,7 +20,9 @@ export interface Job {
   updatedAt: string;
 }
 
-export const columns: ColumnDef<Job>[] = [
+export const columns = (
+  setJobs: React.Dispatch<React.SetStateAction<Job[]>>
+): ColumnDef<Job>[] => [ 
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -165,15 +169,41 @@ export const columns: ColumnDef<Job>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => (
-      <div className="flex justify-center gap-x-3">
-        <button className="text-blue-600 hover:underline cursor-pointer">
-          <Pencil className="w-4 h-4" />
-        </button>
-        <button className="text-red-600 hover:underline cursor-pointer">
-          <Trash className="w-4 h-4" />
-        </button>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const job = row.original;
+      const handleJobDelete = async () => {
+        const confirmDelete = confirm(`Delete job "${job.title}"?`)
+        if(!confirmDelete) return;
+        toast.loading('Deleting Job....')
+        const res = await deleteJob(job.id)
+        // console.log('job id', job.id);
+        
+        toast.dismiss()
+        if(res.success) {
+          toast.success(res.message);
+          if (setJobs) {
+             setJobs(prev => prev.filter(j => (j as any).id !== job.id));
+          }
+          row.toggleSelected(false)
+        } else {
+          toast.error(res.message)
+        }
+      }
+      return (
+        <div className="flex justify-center gap-x-3">
+          <button className="text-blue-600 hover:underline cursor-pointer">
+            <Pencil className="w-4 h-4" />
+          </button>
+          <button 
+          // variant='destructive'
+          onClick={handleJobDelete}
+          className="text-red-600 hover:underline cursor-pointer"
+          >
+            <Trash className="w-4 h-4" />
+          </button>
+        </div>
+      )
+
+    },
   },
 ];
