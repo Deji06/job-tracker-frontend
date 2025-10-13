@@ -1,7 +1,7 @@
 "use server";
 import { jobSchema } from "@/validation";
 import axios from "axios";
-import { cookies} from "next/headers";
+import { cookies } from "next/headers";
 import { handleApiError } from "./utils/errorHandler";
 // import jwt  from 'jsonwebtoken'
 interface formState {
@@ -107,7 +107,7 @@ export async function createJob(
     if (!token) {
       throw new Error("token not provided, please login !");
     }
-    
+
     const payload = parsed.data;
     const config = {
       headers: {
@@ -190,7 +190,7 @@ export async function getAllJobs(
       },
     };
   } catch (error: any) {
-    return handleApiError(error)
+    return handleApiError(error);
   }
 }
 
@@ -212,15 +212,120 @@ export async function deleteJob(id: number) {
         Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.delete(`${url}/api/v1/job/deleteJob/${id}`, config);
+    const response = await axios.delete(
+      `${url}/api/v1/job/deleteJob/${id}`,
+      config
+    );
     console.log(response);
-    
+
     return {
       success: true,
       message: response.data.msg || "job deleted succesfuly",
       error: [],
     };
   } catch (error: any) {
-   return handleApiError(error)
+    return handleApiError(error);
+  }
+}
+
+export async function updateJob(
+  prevState: formState,
+  formData: FormData,
+  id: number
+): Promise<formState> {
+  console.log("FormData received in updateJob:");
+  for (const [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+  }
+  const appliedDateRaw = formData.get("appliedDate")?.toString();
+  console.log('applied date format:',appliedDateRaw);
+  
+  if (!appliedDateRaw) {
+    return {
+      success: false,
+      errors: [{ field: "appliedDate", message: "Invalid or missing date" }],
+      message: "Invalid or missing date",
+    };
+  }
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(appliedDateRaw) || isNaN(Date.parse(appliedDateRaw))) {
+    return {
+      success: false,
+      errors: [
+        {
+          field: "appliedDate",
+          message: "Invalid date format (use YYYY-MM-DD)",
+        },
+      ],
+      message: "Invalid date format",
+    };
+  }
+  const data = {
+    company: formData.get("company")?.toString() || "",
+    title: formData.get("title")?.toString() || "",
+    location: formData.get("location")?.toString() || "",
+    jobType: formData.get("jobType")?.toString() || "",
+    status: formData.get("status")?.toString() || "",
+    appliedDate: appliedDateRaw,
+    link: formData.get("link")?.toString() || "",
+    notes: formData.get("notes")?.toString() || "",
+  };
+  const parsed = jobSchema.safeParse(data);
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Validation failed",
+      errors: parsed.error.issues.map((issue) => ({
+        field: issue.path[0]?.toString(),
+        message: issue.message,
+      })),
+    };
+  }
+
+  try {
+    const url = process.env.NEXT_PUBLIC_API_URL;
+    if (!url) {
+      throw new Error("no URL provided");
+    }
+    const token = (await cookies()).get("authToken")?.value;
+    console.log("authToken", token);
+
+    if (!token) {
+      throw new Error("token not provided, please login !");
+    }
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.patch(
+      `${url}/api/v1/job/updateJob/${id}`,
+      parsed.data,
+      config
+    );
+    console.log(response);
+    return {
+      success: true,
+      message: response.data?.msg || "job updated successfully",
+      errors: [],
+    };
+  } catch (error: any) {
+    console.error("UpdateJobError:", error);
+    const msg =
+      error.response?.data?.msg ||
+      (error.code === "ERR_INTERNET_DISCONNECTED"
+        ? "No internet connection!"
+        : error.response?.status === 404
+        ? "Job not found!"
+        : error.response?.status === 500
+        ? "Server error, please try again later!"
+        : "Request failed, please try again.");
+
+    return {
+      success: false,
+      errors: [{ field: "unknown", message: msg }],
+      message: msg,
+    };
   }
 }

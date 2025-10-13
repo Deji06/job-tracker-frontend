@@ -173,7 +173,7 @@ export async function login(
   }
 }
 
-export async function Logout() {
+export async function logout() {
   (await cookies()).delete("authToken"), revalidatePath("/LogIn");
 }
 

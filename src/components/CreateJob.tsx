@@ -20,7 +20,7 @@ const initialState:formState = {
 }
   const [state, formAction] = useActionState(createJob, initialState)
   const [formData, setFormData] = useState({ company: "", title: "", location: "", jobType: "", status: "", appliedDate: "", link: "", notes: "",});
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  // const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const{id, value} = e.target
@@ -100,7 +100,7 @@ const initialState:formState = {
               value={formData.title}
               onChange={handleChange}
               placeholder="e.g., Frontend Developer"
-              className="border-none bg-white rounded-md p-1 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
+              className="border-none bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
             />
 
             {state.errors.find((e)=>e.field === 'title') && (
@@ -120,7 +120,7 @@ const initialState:formState = {
               value={formData.company}
               onChange={handleChange}
               placeholder="e.g., Google"
-              className="border-none bg-white rounded-md p-1 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
+              className="border-none bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
             />
             {state.errors.find((e)=>e.field==='company') && (
               <p className='text-sm text-red-500'>{state.errors.find((e)=>e.field === 'company')?.message}</p>
@@ -140,7 +140,7 @@ const initialState:formState = {
               value={formData.location}
               onChange={handleChange}
               placeholder="e.g., Lagos, Nigeria"
-              className="border-none bg-white rounded-md p-1 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
+              className="border-none bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
             />
             
               {state.errors.find((e)=>e.field==='location') && (
@@ -158,7 +158,7 @@ const initialState:formState = {
               name='jobType'
               value={formData.jobType}
               onChange={handleChange}
-              className="border-none bg-white rounded-md p-1 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
+              className="border-none bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
             >
               <option value="">Select Job Type</option>
               <option value="HYBRID">Hybrid</option>
@@ -186,7 +186,7 @@ const initialState:formState = {
               name='status'
               value={formData.status}
               onChange={handleChange}
-              className="border-none bg-white rounded-md p-1 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
+              className="border-none bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
             >
               <option value="">Select Status</option>
               <option value="APPLIED">Applied</option>
@@ -214,7 +214,7 @@ const initialState:formState = {
               name='appliedDate'
               value={formData.appliedDate}
               onChange={handleChange}
-              className="border-none bg-white rounded-md p-1 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
+              className="border-none bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
             />
             {state.errors.find((e) => e.field === "appliedDate") && (
               <p className="text-sm text-red-500">

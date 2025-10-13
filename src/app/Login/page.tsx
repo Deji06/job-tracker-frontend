@@ -69,10 +69,10 @@ const Login = () => {
         }}
       />
 
-      <div className="bg-[#f3f3f3] w-[80%] m-auto mt-10 h-fit flex justify-between p-10 rounded-[10px] mb-5">
+      <div className="md:bg-[#f3f3f3] md:w-[80%] m-auto md:mt-10 h-fit md:flex justify-between md:p-10 rounded-[10px] md:mb-5">
         {/* left */}
-        <div className="w-[35%] px-5 mt-[80px] h-fit mx-14">
-          <p>job tracker</p>
+        <div className="md:w-[35%] px-5 md:mt-[80px] pt-20 md:pt-0 md:h-fit h-screen md:mx-14 bg-[url('/bg2.jpg')] bg-center bg-cover md:bg-none">
+          <p className="text-black font-semibold">job tracker</p>
           <h2 className="font-bold text-[30px] text-[#181818] mt-3">sign in</h2>
 
           <form action={formAction} className="flex flex-col mt-4 gap-y-5">
@@ -148,14 +148,14 @@ const Login = () => {
             </div>
             <SubmitButton />
           </form>
-          <p className="text-[#616161] flex gap-x-2 items-center">
-            Don't have an account? <Link href={"/SignUp"}>Sign up</Link>
+          <p className="md:text-[#616161] flex gap-x-2 items-center mt-3 md:mt-0">
+            Don't have an account? <Link href={"/SignUp"} className="text-white md:text-black">Sign Up</Link>
           </p>
           <Link href={'/ForgetPassword'} className="text-[#181818] capitalize">forgot password?</Link>
         </div>
         {/* right */}
         <div
-          className="mr-3"
+          className="mr-3 hidden md:flex flex-col"
           style={{
             backgroundImage: "url('/bg1.jpg')",
             backgroundSize: "cover",

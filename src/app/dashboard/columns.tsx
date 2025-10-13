@@ -21,7 +21,8 @@ export interface Job {
 }
 
 export const columns = (
-  setJobs: React.Dispatch<React.SetStateAction<Job[]>>
+  setJobs: React.Dispatch<React.SetStateAction<Job[]>>,
+  handleEdit:(job:Job) => void 
 ): ColumnDef<Job>[] => [ 
   {
     accessorKey: "title",
@@ -191,11 +192,14 @@ export const columns = (
       }
       return (
         <div className="flex justify-center gap-x-3">
-          <button className="text-blue-600 hover:underline cursor-pointer">
+          <button className="text-blue-600 hover:underline cursor-pointer"
+           onClick={() => handleEdit(job)}
+          
+          >
             <Pencil className="w-4 h-4" />
           </button>
+
           <button 
-          // variant='destructive'
           onClick={handleJobDelete}
           className="text-red-600 hover:underline cursor-pointer"
           >

@@ -9,6 +9,7 @@ import { columns, Job } from "@/app/dashboard/columns";
 import { DataTable } from "@/app/dashboard/data-table";
 import { useRouter } from "next/navigation";
 import { handleApiError } from "@/app/utils/errorHandler";
+import EditJobModal from "./EditJob";
 // import dayjs from "dayjs";
 
 interface GetJobsResponse {
@@ -31,8 +32,11 @@ const DashBoardContent = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [error, setError] = useState<string | null>("");
   const [loading, setLoading] = useState<boolean>(false);
-  // const [page, setPage] = useState<number>(1);
   const [totalJobs, setTotalJobs] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+
+  // const [page, setPage] = useState<number>(1);
   // const [filters, setFilters] = useState<{
   //   jobType?: string;
   //   ApplicationStatus?: string;
@@ -76,6 +80,7 @@ const DashBoardContent = () => {
     setDateInfo({ day, fullDate });
   };
 
+  // function to fetch all jobs
   const fetchJobs = async () => {
     try {
       setLoading(true);
@@ -129,6 +134,26 @@ const DashBoardContent = () => {
     const interval = setInterval(updateDate, 60 * 1000);
     return () => clearInterval(interval);
   }, []);
+
+  // function to display modal and update Job
+  const handleEditClick = (job: Job) => {
+    setSelectedJob(job);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedJob(null);
+    setIsModalOpen(false);
+  };
+
+  const handleJobUpdated = (updatedJob: Job) => {
+    setJobs((prevJobs) =>
+      prevJobs.map((job) => (job.id === updatedJob.id ? updatedJob : job))
+    );
+    toast.success("Job updated successfully!");
+    handleCloseModal();
+  };
+
   return (
     <>
       <Toaster
@@ -194,10 +219,10 @@ const DashBoardContent = () => {
               ) : (
                 <div className="mt-1">
                   <DataTable
-                    columns={columns(setJobs)}
+                    columns={columns(setJobs, handleEditClick)}
                     data={jobs}
                     totalJobs={totalJobs}
-                    setJobs = {setJobs}
+                    setJobs={setJobs}
                     // pageIndex={page}
                     // setPageIndex={setPage}
                     // setFilters={setFilters}
@@ -208,6 +233,13 @@ const DashBoardContent = () => {
           </div>
         </div>
       </div>
+      {isModalOpen && selectedJob && (
+        <EditJobModal
+          jobData={selectedJob}
+          onClose={handleCloseModal}
+          onJobUpdated={handleJobUpdated}
+        />
+      )}
     </>
   );
 };

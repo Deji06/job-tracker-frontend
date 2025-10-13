@@ -57,15 +57,6 @@ export const jobSchema = z.object({
     { message: "Select a valid job status" }
   ),
 
-  // jobType: z.enum(
-  //   ["FULL_TIME", "HYBRID", "REMOTE", "INTERN", "CONTRACT", "ENTRY_LEVEL"],
-  //   {
-  //     message: "Select a valid job type",
-  //   }
-  // ),
-  // status: z.enum(["APPLIED", "INTERVIEW", "OFFERED", "REJECTED"], {
-  //   message: "Select a valid job status",
-  // }),
   appliedDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (use YYYY-MM-DD)")
