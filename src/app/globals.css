@@ -3,6 +3,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Hide scrollbar but keep scroll functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+}
+
+
 .custom-corner {
   background: #686868;
   color: white;

@@ -134,7 +134,7 @@ export async function login(
       secure: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
-    console.log(token);
+    // console.log(token);
     revalidatePath("/Dashboard");
 
     return {

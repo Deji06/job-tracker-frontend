@@ -37,6 +37,9 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   totalJobs: number;
   setJobs?: React.Dispatch<React.SetStateAction<TData[]>>;
+  enableFilters?: boolean; 
+  enableSorting?: boolean; 
+  enablePagination?: boolean;
 }
 function DataTablePagination<TData>({ table, totalJobs}: { table: TableType<TData>, totalJobs:number}) {
   const pageIndex = table.getState().pagination.pageIndex;
@@ -124,11 +127,15 @@ function DataTablePagination<TData>({ table, totalJobs}: { table: TableType<TDat
   );
 }
 
+// data-table component
 export function DataTable<TData, TValue>({
   columns,
   data,
   totalJobs,
-  setJobs
+  setJobs,
+  enableFilters = true,
+  enableSorting = true,
+  enablePagination = true,
 
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -141,15 +148,14 @@ export function DataTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: enableSorting ? setSorting : undefined,
+    onColumnFiltersChange: enableFilters ? setColumnFilters : undefined,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onGlobalFilterChange: setGlobalFilter,
+    getPaginationRowModel: enablePagination ? getPaginationRowModel() : undefined,
+    getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
+    getFilteredRowModel: enableFilters ? getFilteredRowModel() : undefined,
+    onGlobalFilterChange: enableFilters ? setGlobalFilter : undefined,
     globalFilterFn: "includesString",
-    // pageCount: Math.ceil((totalJobs || 0)/10),
     state: {
       sorting,
       columnFilters,
@@ -157,8 +163,8 @@ export function DataTable<TData, TValue>({
       pagination,
       // pagination:{pageIndex:0, pageSize:10}
     },
-    onPaginationChange: setPagination, 
-    autoResetPageIndex:false,
+    onPaginationChange: enablePagination ? setPagination : undefined,
+    autoResetPageIndex: false,
     debugTable: true,
   });
 
@@ -171,43 +177,46 @@ export function DataTable<TData, TValue>({
   return (
     <div className="overflow-hidden rounded-md flex flex-col flex-1">
       {/* Filters */}
-      <div className="flex  flex-wrap gap-4 p-4 bg-gray-50 ">
-        <Input
-          placeholder="Search by title or company..."
-          value={globalFilter}
-          onChange={(event) => setGlobalFilter(event.target.value)}
-          className="max-w-sm"
-        />
-        <Select value={jobTypeFilter} onValueChange={setJobTypeFilter}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Filter Job Type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="ALL">All Job Types</SelectItem>
-            <SelectItem value="FULL_TIME">Full Time</SelectItem>
-            <SelectItem value="HYBRID">Hybrid</SelectItem>
-            <SelectItem value="REMOTE">Remote</SelectItem>
-            <SelectItem value="INTERN">Intern</SelectItem>
-            <SelectItem value="CONTRACT">Contract</SelectItem>
-            <SelectItem value="ENTRY_LEVEL">Entry Level</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Filter Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="ALL">All Statuses</SelectItem>
-            <SelectItem value="APPLIED">Applied</SelectItem>
-            <SelectItem value="INTERVIEW">Interview</SelectItem>
-            <SelectItem value="OFFERED">Offered</SelectItem>
-            <SelectItem value="REJECTED">Rejected</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      {enableFilters && (
+        <div className="flex  flex-wrap gap-4 p-4 bg-gray-50 ">
+          <Input
+            placeholder="Search by title or company..."
+            value={globalFilter}
+            onChange={(event) => setGlobalFilter(event.target.value)}
+            className="max-w-sm"
+          />
+          <Select value={jobTypeFilter} onValueChange={setJobTypeFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter Job Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ALL">All Job Types</SelectItem>
+              <SelectItem value="FULL_TIME">Full Time</SelectItem>
+              <SelectItem value="HYBRID">Hybrid</SelectItem>
+              <SelectItem value="REMOTE">Remote</SelectItem>
+              <SelectItem value="INTERN">Intern</SelectItem>
+              <SelectItem value="CONTRACT">Contract</SelectItem>
+              <SelectItem value="ENTRY_LEVEL">Entry Level</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ALL">All Statuses</SelectItem>
+              <SelectItem value="APPLIED">Applied</SelectItem>
+              <SelectItem value="INTERVIEW">Interview</SelectItem>
+              <SelectItem value="OFFERED">Offered</SelectItem>
+              <SelectItem value="REJECTED">Rejected</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+      )}
       {/* Table with Scroll */}
-      <div className="overflow-auto flex-1  ">
-        <div className="h-full md:h-[230px] overflow-y-auto">
+      <div className="overflow-auto md:flex-1   ">
+        <div className="md:max-h-[230px] relative overflow-y-auto ">
           <Table>
             <TableHeader className="sticky top-0 bg-white z-10">
               {table.getHeaderGroups().map((headerGroup) => (
@@ -251,7 +260,9 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
       {/* Pagination */}
-      <DataTablePagination table={table} totalJobs={totalJobs}/>
+      {enablePagination && (
+        <DataTablePagination table={table} totalJobs={totalJobs}/>
+      )}
     </div>
   );
 }

@@ -1,20 +1,87 @@
-import React from 'react'
+"use client";
+import { useState, useEffect } from "react";
+import { FileUser } from "lucide-react";
+import ClipLoader from "react-spinners/ClipLoader";
+import { DataTable } from "@/app/dashboard/data-table";
+import { searchColumns } from "@/app/dashboard/search-columns";
+import { getAllJobs } from "@/app/dashboardAction";
+import { handleApiError } from "@/app/utils/errorHandler";
+import toast from "react-hot-toast";
+import { Job } from "@/app/dashboard/columns";
 
 const SearchJobContent = () => {
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [error, setError] = useState<string | null>(null);
+  // const [searchQuery, setSearchQuery] = useState<string>("");
+
+  useEffect(() => {
+    const storedJobs = localStorage.getItem("userJobs");
+    if (storedJobs) {
+      setJobs(JSON.parse(storedJobs));
+    }
+  }, []);
+  // useEffect(() => {
+  //   fetchJobs();
+  // }, []);
+
+  const filteredJobs = jobs.filter((job) =>
+    job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    job.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    job.status.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-      <>
-      <div className="px-7 pt-9 flex justify-between">
-        <p>search job </p>
-
-
+    <div className="flex flex-col h-full bg-[#f3f3f3] rounded-tr-[20px] rounded-br-[20px]">
+      <div className="px-7 pt-3 flex justify-between items-center">
+        <p className="text-[#07090b] font-bold capitalize">Search Jobs</p>
+        <input
+          type="text"
+          placeholder="Search by title, company, or location..."
+          className="px-3 py-2 border border-gray-300 rounded-md outline-none focus:ring-1 focus:ring-[#07090b] w-[250px]"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
-      <div className="bg-[#f3f3f3] mt-3 flex-1 rounded-br-[20px] p-7">
+
+      <div className="h-fit mb-5 bg-white mt-2 mx-5 rounded-[20px] px-2 shadow overflow-hidden border-2">
+        <div className="py-4 px-2">
+          <p className="flex gap-x-2 items-center">
+            <FileUser className="w-4 h-4" />
+            <span className="capitalize font-bold">search applications</span>
+          </p>
+
+            <div className="mt-2">
+              <DataTable
+                columns={searchColumns}
+                totalJobs={jobs.length}
+                data={filteredJobs}
+                enableFilters={false}
+                enableSorting={false}
+                enablePagination={false}
+              />
+            </div>
+          {/* )} */}
+        </div>
       </div>
+    </div>
+  );
+};
 
-    
-   
-    </>
-  )
-}
-
-export default SearchJobContent
+export default SearchJobContent;
+          {/* {loading ? (
+            <div className="flex w-fit m-auto mt-20 font-semibold items-center gap-x-2">
+              <ClipLoader size={18} color={"#07090b"} />
+              <p className="text-[#07090b]">Loading Jobs...</p>
+            </div>
+          ) : error ? (
+            <p className="text-red-500 font-semibold w-fit m-auto mt-20">
+              {error}
+            </p>
+          ) : filteredJobs.length === 0 ? (
+            <p className="text-[#07090b] font-semibold w-fit m-auto mt-20">
+              No jobs found.
+            </p>
+          ) : ( */}

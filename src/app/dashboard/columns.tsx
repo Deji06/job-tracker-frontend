@@ -1,6 +1,6 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import { Pencil, Trash, ArrowUpDown,  ChevronsUpDown} from "lucide-react";
+import { Pencil, Trash,  ChevronsUpDown} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 import { deleteJob } from "../dashboardAction";

@@ -1,10 +1,10 @@
 "use client"
 import DashBoard from '../../components/DashBoard'
 
-const dashboard = () => {
+const DashboardLayout = () => {
   return (
      <DashBoard/>
   )
 }
 
-export default dashboard
+export default DashboardLayout

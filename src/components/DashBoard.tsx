@@ -122,6 +122,12 @@ const DashBoardContent = () => {
       setLoading(false);
     }
   };
+  // store jobs locally
+  useEffect(() => {
+    if (jobs.length > 0) {
+      localStorage.setItem("userJobs", JSON.stringify(jobs));
+    }
+  }, [jobs]);
 
   useEffect(() => {
     const getUserNameFromSessionStorage = sessionStorage.getItem("userName");
@@ -130,7 +136,7 @@ const DashBoardContent = () => {
     }
 
     updateDate();
-    fetchJobs();
+    // fetchJobs();
     const interval = setInterval(updateDate, 60 * 1000);
     return () => clearInterval(interval);
   }, []);
@@ -166,7 +172,7 @@ const DashBoardContent = () => {
           },
         }}
       />
-      <div className="flex flex-col h-full bg-[#f3f3f3] rounded-tr-[20px] rounded-br-[20px]">
+      <div className="flex flex-col md:h-full bg-[#f3f3f3] rounded-tr-[20px] rounded-br-[20px]">
         <div className="px-7 pt-3 rounded-tr-[20px]">
           <p className="text-[#07090b] font-bold capitalize">Dashboard</p>
         </div>
@@ -223,6 +229,9 @@ const DashBoardContent = () => {
                     data={jobs}
                     totalJobs={totalJobs}
                     setJobs={setJobs}
+                    enableFilters
+                    enableSorting
+                    enablePagination
                     // pageIndex={page}
                     // setPageIndex={setPage}
                     // setFilters={setFilters}
@@ -233,6 +242,7 @@ const DashBoardContent = () => {
           </div>
         </div>
       </div>
+
       {isModalOpen && selectedJob && (
         <EditJobModal
           jobData={selectedJob}
