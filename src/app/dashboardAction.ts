@@ -102,7 +102,7 @@ export async function createJob(
       throw new Error("no URL provided");
     }
     const token = (await cookies()).get("authToken")?.value;
-    console.log("authToken", token);
+    // console.log("authToken", token);
 
     if (!token) {
       throw new Error("token not provided, please login !");
@@ -155,7 +155,7 @@ export async function getAllJobs(
       throw new Error("no URL provided");
     }
     const token = (await cookies()).get("authToken")?.value;
-    console.log("authToken", token);
+    // console.log("authToken", token);
 
     if (!token) {
       throw new Error("token not provided, please login !");
@@ -201,7 +201,7 @@ export async function deleteJob(id: number) {
       throw new Error("no URL provided");
     }
     const token = (await cookies()).get("authToken")?.value;
-    console.log("authToken", token);
+    // console.log("authToken", token);
 
     if (!token) {
       throw new Error("token not provided, please login !");
@@ -288,7 +288,7 @@ export async function updateJob(
       throw new Error("no URL provided");
     }
     const token = (await cookies()).get("authToken")?.value;
-    console.log("authToken", token);
+    // console.log("authToken", token);
 
     if (!token) {
       throw new Error("token not provided, please login !");

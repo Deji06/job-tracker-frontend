@@ -67,7 +67,7 @@ const ForgetPassword = () => {
         }}
       />
       <div className="bg-[#f3f3f3] h-screen">
-        <div className="w-[50%] m-auto pt-[100px] space-y- borde px-5">
+        <div className="md:w-[50%] m-auto pt-[100px] space-y- borde px-5">
           <p className="text-center">job tracker</p>
           <div>
             <p className="text-center font-bold text-[24px] capitalize">
