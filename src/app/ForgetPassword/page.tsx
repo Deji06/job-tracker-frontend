@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import { MoveRight, Mail } from "lucide-react";
@@ -8,7 +7,7 @@ import { useFormStatus } from "react-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import toast, { Toaster } from "react-hot-toast";
 
-export function SubmitButton() {
+ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
