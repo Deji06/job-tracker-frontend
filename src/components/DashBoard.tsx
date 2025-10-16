@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FileUser, Pencil, Trash } from "lucide-react";
+import { FileUser, RefreshCcw } from "lucide-react";
 import Link from "next/link";
 import { getAllJobs } from "@/app/dashboardAction";
 import toast, { Toaster } from "react-hot-toast";
@@ -136,7 +136,7 @@ const DashBoardContent = () => {
     }
 
     updateDate();
-    // fetchJobs();
+    fetchJobs();
     const interval = setInterval(updateDate, 60 * 1000);
     return () => clearInterval(interval);
   }, []);
@@ -160,6 +160,10 @@ const DashBoardContent = () => {
     handleCloseModal();
   };
 
+  const handleRefresh = () => {
+    fetchJobs()
+  }
+
   return (
     <>
       <Toaster
@@ -172,15 +176,15 @@ const DashBoardContent = () => {
           },
         }}
       />
-      <div className="flex flex-col md:h-full bg-[#f3f3f3] rounded-tr-[20px] rounded-br-[20px]">
-        <div className="px-7 pt-3 rounded-tr-[20px]">
-          <p className="text-[#07090b] font-bold capitalize">Dashboard</p>
+      <div className="flex flex-col md:h-full bg-[#f3f3f3] md:rounded-tr-[20px] md:rounded-br-[20px]">
+        <div className="md:px-7 px-2 pt-3 rounded-tr-[20px]  ">
+          <p className="text-[#07090b] font-bold capitalize text-[24px] md:text-[16px]">Dashboard</p>
         </div>
 
-        <div className="flex flex-col flex-1 bg-white mt-3 m-5 rounded-[20px] px-2 shadow overflow-hidden">
-          <div className="flex justify-between mt-2">
+        <div className="flex flex-col flex-1 bg-white sm:mt-5 rounded md:rounded-none  py-2 md:py-0  px-2 shadow overflow-hidden">
+          <div className="flex flex-col md:flex-row gap-y-3 justify-between mt-2">
             {username ? (
-              <p className="text-[16px] font-bold capitalize px-2">
+              <p className="md:text-[16px] text-[20px] font-bold capitalize px-2">
                 welcome, {username}!{" "}
               </p>
             ) : (
@@ -207,8 +211,9 @@ const DashBoardContent = () => {
                   <p className="text-[#07090b]">Loading Jobs....</p>
                 </div>
               ) : error ? (
-                <p className="text-red-500 font-semibold w-fit m-auto mt-20">
+                <p className="text-red-500 font-semibold w-fit m-auto mt-20 flex items-center gap-x-2 ">
                   {error}
+                  <RefreshCcw  onClick={handleRefresh} className="h-4 w-4" />
                 </p>
               ) : jobs.length === 0 ? (
                 <div className="flex flex-col">

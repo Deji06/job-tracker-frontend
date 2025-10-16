@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Mail, Eye, EyeOff, User } from "lucide-react";
+import { Mail, Eye, EyeOff} from "lucide-react";
 import Link from "next/link";
 import { login } from "@/action";
 import { useActionState } from "react";
@@ -14,7 +14,7 @@ const Login = () => {
     success: boolean;
     message: string;
     errors: { field: string; message: string }[];
-    user? : string
+    user?: string;
   }
   const initialState: FormState = {
     success: false,
@@ -48,8 +48,8 @@ const Login = () => {
   const router = useRouter();
   useEffect(() => {
     if (state.success && state.user) {
-      toast.success("login successful! Redirecting to dashboard...") 
-      sessionStorage.setItem('userName', state.user)
+      toast.success("login successful! Redirecting to dashboard...");
+      sessionStorage.setItem("userName", state.user);
       setTimeout(() => {
         router.push("/dashboard");
       }, 3000);
@@ -69,9 +69,9 @@ const Login = () => {
         }}
       />
 
-      <div className="md:bg-[#f3f3f3] md:w-[80%] m-auto md:mt-10 h-fit md:flex justify-between md:p-10 rounded-[10px] md:mb-5">
+      <div className="bg-[#f3f3f3] md:w-[80%] m-auto md:mt-10 h-fit md:flex md:justify-between md:p-10 p-6 md:rounded-[10px] md:mb-5">
         {/* left */}
-        <div className="md:w-[35%] px-5 md:mt-[80px] pt-20 md:pt-0 md:h-fit h-screen md:mx-14 bg-[url('/bg2.jpg')] bg-center bg-cover md:bg-none">
+        <div className="md:w-[35%] px-5 md:mt-[70px] pt-20 md:pt-0 h-fit md:mx-14 ">
           <p className="text-black font-semibold">job tracker</p>
           <h2 className="font-bold text-[30px] text-[#181818] mt-3">sign in</h2>
 
@@ -149,22 +149,28 @@ const Login = () => {
             <SubmitButton />
           </form>
           <p className="md:text-[#616161] flex gap-x-2 items-center mt-3 md:mt-0">
-            Don't have an account? <Link href={"/SignUp"} className="text-white md:text-black">Sign Up</Link>
+            Don't have an account?{" "}
+            <Link href={"/SignUp"} className=" text-[14px]">
+              Sign Up
+            </Link>
           </p>
-          <Link href={'/ForgetPassword'} className="text-[#181818] capitalize">forgot password?</Link>
+          <Link href={"/ForgetPassword"} className="text-[#181818] capitalize">
+            forgot password?
+          </Link>
         </div>
+
         {/* right */}
         <div
-          className="mr-3 hidden md:flex flex-col"
+          className="w-full md:w-[50%] mt-10  rounded-[20px] h-[300px] md:h-[600px] flex flex-col bg-cover bg-center"
           style={{
             backgroundImage: "url('/bg1.jpg')",
-            backgroundSize: "cover",
-            width: "50%",
-            height: "600px",
-            borderRadius: "20px",
+            // backgroundSize: "cover",
+            // width: "50%",
+            // height: "600px",
+            // borderRadius: "20px",
           }}
         >
-          <div className="text-white text-[14px] borde rounded-[10px] space-y-3 mt-[100px] mx-5 px-2 bg-blac py-10">
+          <div className="text-white text-[14px] rounded-[10px] space-y-3 md:mt-[100px] mt-10 m-10 px-2 bg-black opacity-80 md:bg-none py-10 hidden md:flex">
             <div className="px-5">
               <p className="capitalize text-[16px] font-bold">job tracker</p>
               <p className="text-[20px] font-bold capitalize mt-2">
@@ -181,7 +187,7 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="relative text-white text-[14px] rounded-[10px] space-y-3 mt-[0px] mx-5 px-2 bg-[#686868] py-5">
+          <div className="relative text-white text-[14px] rounded-[10px] space-y-3 mt-[0px] mx-5 px-2 bg-[#686868] py-5 flex flex-col">
             <p className="text-[20px] font-bold capitalize">
               track your job application
             </p>

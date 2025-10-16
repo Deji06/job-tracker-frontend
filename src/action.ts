@@ -2,7 +2,7 @@
 import {
   registerationSchema,
   loginSchema,
-  resetPasswordSchema,
+  // resetPasswordSchema,
   forget_password_Schema,
 } from "./validation";
 import axios from "axios";

@@ -69,13 +69,13 @@ const SignUp = () => {
         }}
       />
 
-    <div className="bg-[#f3f3f3] w-[80%] m-auto mt-10 h-fit flex justify-between p-10 rounded-[10px] mb-5">
+    <div className="bg-[#f3f3f3] md:w-[90%] mx-auto md:mt-10 h-screen sm:h-fit flex flex-col md:flex-row justify-between md:items-start p-6 md:p-10 md:rounded-[10px] md:mb-5 shadow-sm">
       {/* left */}
-      <div className="w-[35%] px-5 mt-[80px] h-fit mx-14">
+      <div className="md:w-[35%] w-full px-3 md:px-5 md:mt-[70px] md:mx-14 space-y-5 md:space-y-0">
         <p>job tracker</p>
         <h2 className="font-bold text-[30px] text-[#181818] mt-3">sign up</h2>
 
-        <form action={formAction} className="flex flex-col mt-4 gap-y-5">
+        <form action={formAction} className="flex flex-col mt-4 gap-y-5 w-full">
           <div className="">
             <label
               htmlFor="name"
@@ -178,18 +178,19 @@ const SignUp = () => {
           Already signed up? <Link href={"/Login"}>Sign in</Link>
         </p>
       </div>
-      {/* right */}
+
+      {/* right side */}
       <div
-        className="mr-3"
+        className="w-full md:w-[50%] mt-10 rounded-[20px] h-[300px] md:h-[600px] flex flex-col bg-cover bg-center"
         style={{
           backgroundImage: "url('/bg1.jpg')",
-          backgroundSize: "cover",
-          width: "50%",
-          height: "600px",
-          borderRadius: "20px",
+          // backgroundSize: "cover",
+          // width: "50%",
+          // height: "600px",
+          // borderRadius: "20px",
         }}
       >
-        <div className="text-white text-[14px] borde rounded-[10px] space-y-3 mt-[100px] mx-5 px-2 bg-blac py-10">
+        <div className="text-white text-[14px] rounded-[10px] space-y-3 md:mt-[100px] md:m-10 m-5 opacity-80 px-2 bg-black md:bg-none py-10">
           <div className="px-5">
             <p className="capitalize text-[16px] font-bold">job tracker</p>
             <p className="text-[20px] font-bold capitalize mt-2">
@@ -206,7 +207,7 @@ const SignUp = () => {
           </div>
         </div>
 
-        <div className="relative text-white text-[14px] rounded-[10px] space-y-3 mt-[0px] mx-5 px-2 bg-[#686868] py-5">
+        <div className="relative text-white text-[14px] rounded-[10px] space-y-3 mt-[0px] mx-5 px-2 bg-[#686868] py-5 hidden md:flex flex-col">
           <p className="text-[20px] font-bold capitalize">
             track your job application
           </p>

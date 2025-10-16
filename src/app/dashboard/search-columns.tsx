@@ -1,6 +1,6 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import { Job } from "../dashboard/columns"; // 👈 reuse the same Job interface
+import { Job } from "../dashboard/columns"; 
 
 export const searchColumns: ColumnDef<Job>[] = [
   {
