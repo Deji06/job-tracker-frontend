@@ -65,7 +65,6 @@ const EditJobModal: React.FC<EditJobModalProps> = ({
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  // Handle success/error notifications
   useEffect(() => {
     if (state.success) {
       toast.success("Job updated successfully!");
@@ -87,7 +86,7 @@ const EditJobModal: React.FC<EditJobModalProps> = ({
       <button
         type="submit"
         disabled={pending}
-        className="bg-[#181818] text-white px-8 py-2 rounded-md hover:bg-[#2a2a2a] transition-all disabled:opacity-60 "
+        className="bg-[#181818] text-white px-8 py-2 rounded-md hover:bg-[#2a2a2a] transition-all disabled:opacity-60 cursor-pointer "
       >
         {pending ? <ClipLoader size={18} color="#ffffff" /> : "Update"}
       </button>
@@ -109,7 +108,7 @@ const EditJobModal: React.FC<EditJobModalProps> = ({
 
       {/* Modal backdrop */}
       <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 p-4">
-        {/* Modal container */}
+        {/* container */}
         <div className="bg-[#f9f9f9] w-full max-w-2xl rounded-2xl shadow-lg p-6 relative animate-fadeIn">
             <div>
                 <h2 className="text-xl font-semibold text-[#07090b] mb-4">
@@ -205,6 +204,7 @@ const EditJobModal: React.FC<EditJobModalProps> = ({
               </label>
               <textarea
                 id="notes"
+                name="notes"
                 value={formData.notes}
                 onChange={handleChange}
                 rows={4}

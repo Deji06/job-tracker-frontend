@@ -50,10 +50,10 @@ function DataTablePagination<TData>({ table, totalJobs}: { table: TableType<TDat
   const endRow = Math.min(startRow + currentPageRowCount - 1, totalJobs);
 
   return (
-    <div className="flex items-center justify-between px-2 py-4">
-      <div className="flex items-center justify-between space-x-6 lg:space-x-8 w-full">
+    <div className="flex items-center w-full justify-between px-2 py-4 border-">
+      <div className="flex flex-wrap sm:flex-row sm:items-center justify-between md:space-x-6 lg:space-x-8 w-full">
         <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium flex gap-x-1">
+          <p className="sm:text-sm text-[13px] font-medium flex gap-x-1">
             <span className="text-[#71717a]">
               Showing 
             </span>
@@ -74,11 +74,11 @@ function DataTablePagination<TData>({ table, totalJobs}: { table: TableType<TDat
             )}
           </p>
         </div>
-        <div className="flex items-center">
-          <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+        <div className="flex items-center justify-between sm:justify-center sm:w-fit w-full mt-2 sm:mt-0">
+          <div className="flex w-[100px] sm:items-center sm:justify-center text-sm font-medium">
             Page {pageIndex + 1} of {table.getPageCount()}
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-6 md:space-x-2">
             <Button
               variant="outline"
               size="icon"

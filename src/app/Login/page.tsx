@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Mail, Eye, EyeOff} from "lucide-react";
+import { Mail, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { login } from "@/action";
 import { useActionState } from "react";
@@ -9,11 +9,10 @@ import { useFormStatus } from "react-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import box from '../../../public/signIn_Box.png'
-import potrait1 from '../../../public/laptop-4906312_1280.jpg'
-import potrait2 from '../../../public/man-2562325_1280.jpg'
-import potrait3 from '../../../public/portrait-5115892_1280.jpg'
-// import potrait4 from '../../../public/WhatsApp Image 2024-12-04 at 15.34.33_b545206f.jpg'
+import box from "../../../public/signIn_Box.png";
+import potrait1 from "../../../public/laptop-4906312_1280.jpg";
+import potrait2 from "../../../public/man-2562325_1280.jpg";
+import potrait3 from "../../../public/portrait-5115892_1280.jpg";
 
 const Login = () => {
   interface FormState {
@@ -75,9 +74,9 @@ const Login = () => {
         }}
       />
 
-      <div className="bg-[#f3f3f3] lg:w-[80%] m-auto lg:mt-10 h-screen lg:h-fit md:flex md:justify-between md:p-10 p-6 md:rounded-[10px] md:mb-5">
+      <div className="bg-[#f3f3f3] lg:w-[80%] m-auto lg:mt-10 h-fit md:flex md:justify-between md:p-10 p-6 md:rounded-[10px] ">
         {/* left */}
-        <div className="lg:w-[35%]  px-5 md:mt-[70px] pt-20 md:pt-0 h-fit md:mx-14">
+        <div className="lg:w-[35%]  px-5 md:mt-[70px] pt-20 md:pt-0 h-fit lg:mx-14">
           <p className="text-black font-semibold">job tracker</p>
           <h2 className="font-bold text-[30px] text-[#181818] mt-3">sign in</h2>
 
@@ -170,7 +169,6 @@ const Login = () => {
           className="w-full md:w-[60%] mt-10  rounded-[20px] h-[300px] md:h-[600px] flex flex-col bg-cover bg-center"
           style={{
             backgroundImage: "url('/bg1.jpg')",
-           
           }}
         >
           <div className="text-white text-[14px] rounded-[20px] space-y-3 md:mt-[80px] mt-10 lg:m-10 m-10 md:m-5 px-2 bg-black opacity-80 md:bg-none py-10 hidden md:flex">
@@ -191,26 +189,44 @@ const Login = () => {
           </div>
 
           <div className="relative text-white text-[14px] bg-cover w-[100%] opacity-100 h-[200px] md:mx-10 mx-5">
-            <Image src={box} alt="image" className="md:w-[85%] w-[90%] absolute md:top-0 top-14"/>
+            <Image
+              src={box}
+              alt="image"
+              className="md:w-[85%] w-[90%] h-[150px] md:h-fit absolute md:top-0 top-14"
+            />
 
-            <div className="flex flex-col w-[80%] absolute top-[65px] md:top-7 gap-y-4 lg:gap-y-8 md:gap-y-2 px-2 md:px-5">
+            <div className="flex flex-col w-[80%] absolute top-[65px] md:top-7 gap-y-2 lg:gap-y-8 md:gap-y-2 px-2 md:px-5">
               <p className="lg:text-[20px] font-bold capitalize">
                 track your job application
               </p>
               <p className="text-white">
-                Be among the first founders to experience the easiest way to track
-                your job applications
+                Be among the first founders to experience the easiest way to
+                track your job applications
               </p>
               <p className="">Now it is your turn to join us</p>
             </div>
 
-            <div className="absolute lg:right-[90px] right-10 lg:bottom-5 md:bottom-14 md:right-12 bottom-0 flex -space-x-3">
-              <Image src={potrait1} alt="human picture"  className="w-8 h-8 rounded-full bg-white/60 border border-white"/>
-              <Image src={potrait2} alt="human picture"  className="w-8 h-8 rounded-full bg-white/60 border border-white"/>
-              <Image src={potrait3} alt="human picture"  className="w-8 h-8 rounded-full bg-white/60 border border-white"/>
-              <div className="w-8 h-8 rounded-full bg-black/60 border border-white m-auto p-1 text-[12px] "> +2</div>
+            <div className="absolute lg:right-[90px] right-5 lg:bottom-5 md:bottom-14 md:right-12 bottom-0 flex -space-x-3">
+              <Image
+                src={potrait1}
+                alt="human picture"
+                className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-white/60 border border-white"
+              />
+              <Image
+                src={potrait2}
+                alt="human picture"
+                className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-white/60 border border-white"
+              />
+              <Image
+                src={potrait3}
+                alt="human picture"
+                className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-white/60 border border-white"
+              />
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-black/60 border border-white m-auto p-1 text-[12px] ">
+                {" "}
+                +2
+              </div>
             </div>
-
           </div>
         </div>
       </div>

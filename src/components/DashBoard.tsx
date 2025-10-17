@@ -176,7 +176,7 @@ const DashBoardContent = () => {
           },
         }}
       />
-      <div className="flex flex-col md:h-full bg-[#f3f3f3] md:rounded-tr-[20px] md:rounded-br-[20px]">
+      <div className="flex flex-col md:h-full bg-[#f3f3f3] md:rounded-tr-[20px] md:rounded-br-[20px] ">
         <div className="md:px-7 px-2 pt-3 rounded-tr-[20px]  ">
           <p className="text-[#07090b] font-bold capitalize text-[24px] md:text-[16px]">Dashboard</p>
         </div>
@@ -194,7 +194,7 @@ const DashBoardContent = () => {
             )}
 
             <p className="text-[15px] px-2 text-[#07090b]  ">
-              {dateInfo.day}, {dateInfo.fullDate}
+             <span className="font-bold">{dateInfo.day}</span>, <span className="text-sm ">{dateInfo.fullDate}</span>
             </p>
           </div>
 
@@ -213,7 +213,7 @@ const DashBoardContent = () => {
               ) : error ? (
                 <p className="text-red-500 font-semibold w-fit m-auto mt-20 flex items-center gap-x-2 ">
                   {error}
-                  <RefreshCcw  onClick={handleRefresh} className="h-4 w-4" />
+                  <RefreshCcw  onClick={handleRefresh} className="h-4 w-4 cursor-pointer" />
                 </p>
               ) : jobs.length === 0 ? (
                 <div className="flex flex-col">

@@ -130,6 +130,7 @@ const CreateJobContent = () => {
             <input
               type="text"
               id="title"
+              name="title"
               value={formData.title}
               onChange={handleChange}
               placeholder="e.g., Frontend Developer"
@@ -154,6 +155,7 @@ const CreateJobContent = () => {
               type="text"
               id="company"
               value={formData.company}
+              name="company"
               onChange={handleChange}
               placeholder="e.g., Google"
               className="bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
@@ -177,6 +179,7 @@ const CreateJobContent = () => {
               type="text"
               id="location"
               value={formData.location}
+              name="location"
               onChange={handleChange}
               placeholder="e.g., Lagos, Nigeria"
               className="bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
@@ -194,6 +197,7 @@ const CreateJobContent = () => {
             <select
               id="jobType"
               value={formData.jobType}
+              name="jobType"
               onChange={handleChange}
               className="bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] text-sm"
             >
@@ -218,6 +222,7 @@ const CreateJobContent = () => {
             <select
               id="status"
               value={formData.status}
+              name="status"
               onChange={handleChange}
               className="bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] text-sm"
             >
@@ -240,6 +245,7 @@ const CreateJobContent = () => {
             <input
               type="date"
               id="appliedDate"
+              name="appliedDate"
               value={formData.appliedDate}
               onChange={handleChange}
               className="bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] text-sm"
@@ -258,6 +264,7 @@ const CreateJobContent = () => {
               type="url"
               id="link"
               value={formData.link}
+              name="link"
               onChange={handleChange}
               placeholder="e.g., https://company.com/job-posting"
               className="bg-white rounded-md p-2 outline-none focus:ring-1 focus:ring-[#07090b] placeholder:text-sm text-sm"
@@ -275,6 +282,7 @@ const CreateJobContent = () => {
             <textarea
               id="notes"
               value={formData.notes}
+              name="notes"
               onChange={handleChange}
               rows={4}
               placeholder="Add any notes about this application..."

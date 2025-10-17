@@ -16,8 +16,12 @@ export default function dashboard({ children }: { children: React.ReactNode }) {
   }
 
   const handleLogout = async() => {
-     await logout()
-     router.push('/Login')
+    try {
+      await logout()
+      router.push('/Login')
+    } catch (error) {
+      console.error(error)
+    }
   }
   return (
     <div className="md:rounded-[20px] md:m-5 min-h-screen bg-[#f3f3f3] flex flex-col ">
@@ -43,7 +47,7 @@ export default function dashboard({ children }: { children: React.ReactNode }) {
           {openSideBar && (
             <div className="fixed inset-0 bg-black/40 z-10 md:hidden" onClick={handleMenu}>
               <div 
-              className="w-[70%] fixed left-0 top-0 bottom-0 shadow px-7 pt-3 z-20 rounded-tr-[20px] rounded-br-[20px] bg-[#07090b] space-y-3 transition-transform duration-300 flex flex-col justify-between">
+              className="w-[70%] fixed left-0 top-0 bottom-0 shadow px-7 pt-3 z-20 rounded-tr-[10px] rounded-br-[10px] bg-[#07090b] space-y-3 transition-transform duration-300 flex flex-col justify-between">
                <div>
                 <div className="flex flex-col gap-y-3">
                   <p className="font-bold text-[20px] text-white capitalize mt-1">job tracker</p>
@@ -65,8 +69,8 @@ export default function dashboard({ children }: { children: React.ReactNode }) {
           )}
   
         {/* Right Content */}
-        <div className="w-[75%] shadow md:rounded-tr-[20px] md:rounded-br-[20px] flex flex-col flex-1 z-0">
-          <PanelRightOpen  onClick={handleMenu} className="md:hidden flex m-5 w-8 h-8"  />
+        <div className="w-[75%] shadow md:rounded-tr-[20px] md:rounded-br-[20px] flex flex-col flex-1 z-0 ">
+          <PanelRightOpen  onClick={handleMenu} className="md:hidden flex my-5 mx-2  w-7 h-6"  />
           {children}
         </div>
       </div>

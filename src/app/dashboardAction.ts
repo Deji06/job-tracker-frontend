@@ -53,14 +53,28 @@ export async function createJob(
   formData: FormData
 ): Promise<formState> {
   try {
-    const appliedDateRaw = formData.get("appliedDate")?.toString();
-    if (!appliedDateRaw) {
-      return {
-        success: false,
-        errors: [{ field: "appliedDate", message: "Invalid or missing date" }],
-        message: "Invalid or missing date",
-      };
-    }
+    // const appliedDateRaw = formData.get("appliedDate")?.toString();
+    // if (!appliedDateRaw) {
+    //   return {
+    //     success: false,
+    //     errors: [{ field: "appliedDate", message: "Invalid or missing date" }],
+    //     message: "Invalid or missing date",
+    //   };
+    // }
+  console.log("FormData received in createJob:");
+  for (const [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+  }
+  const appliedDateRaw = formData.get("appliedDate")?.toString();
+  console.log('applied date format:',appliedDateRaw);
+  
+  if (!appliedDateRaw) {
+    return {
+      success: false,
+      errors: [{ field: "appliedDate", message: "Invalid or missing date" }],
+      message: "Invalid or missing date",
+    };
+  }
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!dateRegex.test(appliedDateRaw) || isNaN(Date.parse(appliedDateRaw))) {
       return {

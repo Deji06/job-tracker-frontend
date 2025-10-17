@@ -1,6 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Job } from "../dashboard/columns"; 
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export const searchColumns: ColumnDef<Job>[] = [
   {
@@ -91,4 +92,44 @@ export const searchColumns: ColumnDef<Job>[] = [
         </span>
       ),
   },
+  {
+  accessorKey: "notes",
+  header: "Notes",
+  cell: ({ row }) => {
+    const note = row.original.notes;
+    if (!note) {
+      return <span className="text-muted-foreground text-[12px]">no note</span>;
+    }
+
+    return (
+      <>
+        {/* Desktop version */}
+        <span
+          className="hidden sm:block truncate max-w-[150px] text-[12px] text-blue-600"
+          title={note}
+        >
+          {note}
+        </span>
+
+        {/* Mobile version (tap to view) */}
+        <div className="block sm:hidden">
+          <Dialog>
+            <DialogTrigger asChild>
+              <button className="truncate max-w-[120px] text-[12px] text-blue-600">
+                {note}
+              </button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Note</DialogTitle>
+              </DialogHeader>
+              <p className="text-sm text-gray-700">{note}</p>
+            </DialogContent>
+          </Dialog>
+        </div> 
+      </>
+    );
+  },
+  enableSorting: false,
+},
 ];

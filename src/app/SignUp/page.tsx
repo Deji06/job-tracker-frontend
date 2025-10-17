@@ -74,9 +74,9 @@ const SignUp = () => {
         }}
       />
 
-      <div className="bg-[#f3f3f3] lg:w-[80%] mx-auto lg:mt-10 h-screen lg:h-fit flex flex-col md:flex-row justify-between md:items-start p-6 md:p-10 md:rounded-[10px] md:mb-5 shadow-sm">
+      <div className="bg-[#f3f3f3] lg:w-[80%] mx-auto lg:mt-10 h-fit flex flex-col md:flex-row justify-between md:items-start p-6 md:p-10 md:rounded-[10px] shadow-sm">
         {/* left */}
-        <div className="md:w-[35%] w-full px-3 md:px-5 md:mt-[70px] md:mx-14 space-y-5 md:space-y-0">
+        <div className="md:w-[35%] w-full px-3 md:px-5 md:mt-[70px] lg:mx-14 space-y-5 md:space-y-0">
           <p>job tracker</p>
           <h2 className="font-bold text-[30px] text-[#181818] mt-3">sign up</h2>
 
@@ -194,9 +194,9 @@ const SignUp = () => {
             backgroundImage: "url('/bg1.jpg')",
           }}
         >
-          <div className="text-white text-[14px] rounded-[20px] space-y-3 lg:mt-[80px] mt-10 lg:m-10 m-10 md:m-5 px-2 bg-black opacity-80 md:bg-none md:py-10">
+          <div className="text-white text-[14px] rounded-[20px] space-y-3 lg:mt-[80px] lg:m-10 md:m-5 px-2 bg-black opacity-80 md:bg-none md:py-10 m-3">
             <div className="px-5">
-              <p className="capitalize text-[16px] font-bold">job tracker</p>
+              <p className="capitalize text-[16px] font-bold pt-2 sm:pt-0">job tracker</p>
               <p className="text-[20px] font-bold capitalize mt-2">
                 Welcome to Job Tracker
               </p>
@@ -218,7 +218,7 @@ const SignUp = () => {
               className="md:w-[85%] w-[90%] absolute md:top-0 top-14"
             />
 
-            <div className="flex flex-col w-[80%] absolute top-[65px] md:top-7 gap-y-4 lg:gap-y-8 md:gap-y-2 px-2 md:px-5">
+            <div className="flex flex-col w-[80%] absolute top-[65px] md:top-7 gap-y-2 lg:gap-y-8 md:gap-y-2 px-2 md:px-5">
               <p className="lg:text-[20px] font-bold capitalize">
                 track your job application
               </p>

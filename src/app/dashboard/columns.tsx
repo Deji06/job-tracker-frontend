@@ -4,6 +4,7 @@ import { Pencil, Trash,  ChevronsUpDown} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 import { deleteJob } from "../dashboardAction";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export interface Job {
   id: number;
@@ -155,18 +156,58 @@ export const columns = (
     enableSorting: false,
   },
   {
-    accessorKey: "notes",
-    header: "Notes",
-    cell: ({ row }) => 
-      row.original.notes ?(
-      <span className="truncate max-w-[150px] block text-[12px]" title={row.original.notes}>
-        {row.original.notes}
-      </span>
-    ): (
-      <span className="text-muted-foreground">no note</span>
-    ),
-    enableSorting: false,
+  accessorKey: "notes",
+  header: "Notes",
+  cell: ({ row }) => {
+    const note = row.original.notes;
+    if (!note) {
+      return <span className="text-muted-foreground text-[12px]">no note</span>;
+    }
+
+    return (
+      <>
+        {/* Desktop version */}
+        <span
+          className="hidden sm:block truncate max-w-[150px] text-[12px] text-blue-600"
+          title={note}
+        >
+          {note}
+        </span>
+
+        {/* Mobile version (tap to view) */}
+        <div className="block sm:hidden">
+          <Dialog>
+            <DialogTrigger asChild>
+              <button className="truncate max-w-[120px] text-[12px] text-blue-600">
+                {note}
+              </button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Note</DialogTitle>
+              </DialogHeader>
+              <p className="text-sm text-gray-700">{note}</p>
+            </DialogContent>
+          </Dialog>
+        </div> 
+      </>
+    );
   },
+  enableSorting: false,
+},
+  // {
+  //   accessorKey: "notes",
+  //   header: "Notes",
+  //   cell: ({ row }) => 
+  //     row.original.notes ? (
+  //     <span className="truncate max-w-[150px] block text-[12px]" title={row.original.notes}>
+  //       {row.original.notes}
+  //     </span>
+  //   ): (
+  //     <span className="text-muted-foreground">no note</span>
+  //   ),
+  //   enableSorting: false,
+  // },
   {
     id: "actions",
     header: "Actions",
