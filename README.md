@@ -1,5 +1,7 @@
 Searching for jobs can be overwhelming — tracking applications, statuses, and deadlines easily gets messy. The Job Trackerapp was designed to solve that problem by providing a simple, structured, and visually clean way to manage job applications. This project showcases my skills in full-stack development, database design, and creating a smooth, responsive UI that empowers users to stay organized during their job search.
 
+link: https://trackjobs.vercel.app/
+
 
 ** Tech Stack at a Glance
 
